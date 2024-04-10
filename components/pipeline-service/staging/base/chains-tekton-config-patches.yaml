@@ -15,7 +15,7 @@ spec:
     artifacts.oci.storage: "oci"
 
     # Configure deep inspection
-    artifacts.pipelinerun.enable-deep-inspection: true
+    artifacts.pipelinerun.enable-deep-inspection: "true"
 
     # Configure PipelineRun attestation
     artifacts.pipelinerun.format: "in-toto"
