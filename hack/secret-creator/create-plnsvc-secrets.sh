@@ -9,7 +9,9 @@ main() {
     create_s3_secret tekton-logging tekton-results-s3
     create_db_cert_secret_and_configmap
     if ! [ -x "$(command -v mc)" ]; then
-        curl https://dl.min.io/client/mc/release/linux-amd64/mc \
+        # curl https://dl.min.io/client/mc/release/linux-amd64/mc \
+        # MAC Specific change
+        curl https://dl.min.io/client/mc/release/darwin-arm64/mc \
           --create-dirs \
         -o $HOME/minio-binaries/mc && chmod +x $HOME/minio-binaries/mc
         export PATH=$PATH:$HOME/minio-binaries/
@@ -71,7 +73,9 @@ create_db_cert_secret_and_configmap() {
     openssl x509 -req -days 9999 -text -extensions v3_ca \
         -signkey ".tmp/tekton-results/ca.key" \
         -in ".tmp/tekton-results/ca.csr" \
-        -extfile "/etc/ssl/openssl.cnf" \
+        # -extfile "/etc/ssl/openssl.cnf" \
+        # Mac Specific change
+        -extfile "/opt/homebrew/etc/openssl@3/openssl.cnf" \
         -out ".tmp/tekton-results/ca.crt" \
         > /dev/null
     openssl req -new -nodes -text \
